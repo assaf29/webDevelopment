@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> TV Series Blog </title>
+    <script src  = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css">
+
+</head>
+<body>
+  
+  <div class="ui fix inverted menu">
+      <div class = "ui container">
+          <div class = "header item"><a  href="/" </a> <i class="cloudversify icon"></i>    </div>
+          <a href="/signin" class = "item">sign in </a>
+          <a href="/signup" class = "item">sign up </a>
+
+          
+      </div>
+  </div>
+  
+  
+
+
+<div class="ui main text container">
+   	<div class="ui huge header">Weather Site</div>
+    <div class="ui top attached segment">
+<div class="ui divided items">
+  
+   <div class="ui big action input">
+  <input id = "cityID" type="text" placeholder="Search...">
+  <button id ="searchButton" class="ui icon button">
+    <i class="search icon"></i>
+  </button>
+</div>
+	 <div class="item">
+	     
+	    <div class="image">
+             <p id = "cityIcon" ></p>
+	    </div>
+	    <div class="content">
+	      <p id = "cityName" ></p>
+	      <div class="meta">
+	        <span class="cinema" id = "cityTemp"></span>
+	      </div>
+	      <div class="description">
+	        <p id = "cityDesc"> </p>
+	      </div>
+	      <div class="extra">
+	       
+	      </div>
+	    </div>
+	  </div>
+
+</div>
+</div>
+    
+  </div>
+  
+  <script type="text/javascript">
+
+   
+    
+    $("#searchButton").click(function(event) {
+    
+    event.preventDefault();
+    event.stopPropagation();
+    clearData();
+    
+    var city = $("#cityID").val();
+
+     var cityName = $("#cityName");
+     var cityTemp = $("#cityTemp");
+     var cityDesc = $("#cityDesc");
+     var cityWindSpeed = $("#cityWindSpeed");
+     var cityIcon = $("#cityIcon");
+
+    $.ajax({
+        url: "https://api.openweathermap.org/data/2.5/weather?q="+city+"&appid=35b815eb66706346112dda03f24ae501&units=metric",
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            
+           
+            cityName.append(data["name"]);
+            cityTemp.append(data["main"]["temp"]+"℃");
+            cityDesc.append(data["weather"][0]["description"]);
+            cityWindSpeed.append("Wind Speed: "+data["wind"]["speed"]);
+            cityIcon.append("<img src='https://openweathermap.org/img/w/"+data['weather'][0]['icon']+".png'></img>");
+
+        } 
+        
+    })
+})
+
+ function clearData (){
+     
+    var cityName = $("#cityName").empty();
+    var cityTemp = $("#cityTemp").empty();
+    var cityDesc = $("#cityDesc").empty();
+    var cityWindSpeed = $("#cityWindSpeed").empty();
+    var cityIcon = $("#cityIcon").empty();
+    
+        
+    }
+    
+</script>
+ 
+</body>
+</html>
